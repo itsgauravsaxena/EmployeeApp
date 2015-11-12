@@ -1,0 +1,74 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Fri Nov 13 00:08:32 CET 2015
+  Author:  gaursaxe
+  Type: BPEL 2.0 Process
+  Purpose: One Way BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="EventsBPELProcess"
+               targetNamespace="http://xmlns.oracle.com/EmployeeApp/PublishMultiXMLtest/EventsBPELProcess"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://xmlns.oracle.com/EmployeeApp/PublishMultiXMLtest/EventsBPELProcess"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:ui="http://xmlns.oracle.com/soa/designer"
+               xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns1="http://xmlns.oracle.com/pcbpel/adapter/jms/EmployeeApp/PublishMultiXMLtest/PartyEventJMSConsumer"
+         xmlns:ns2="http://xmlns.oracle.com/pcbpel/adapter/db/EmployeeApp/PublishMultiXMLtest/PartFinanceDbAdapter"
+         xmlns:ns3="http://xmlns.oracle.com/pcbpel/adapter/db/EmployeeApp/PublishMultiXMLtest/PartyEventsDbAdapter"
+         xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+
+  <import ui:processWSDL="true" namespace="http://xmlns.oracle.com/EmployeeApp/PublishMultiXMLtest/EventsBPELProcess" location="../WSDLs/EventsBPELProcess.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      PARTNERLINKS                                                      
+      List of services participating in this BPEL process               
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  --> 
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="eventsbpelprocess_client" partnerLinkType="client:EventsBPELProcess" myRole="EventsBPELProcessProvider"/>
+    <partnerLink name="PartyEventJMSConsumer" partnerLinkType="ns1:Consume_Message_plt" myRole="Consume_Message_role"/>
+    <partnerLink name="PartFinanceDbAdapter" partnerLinkType="ns2:PartFinanceDbAdapter_plt"
+                 partnerRole="PartFinanceDbAdapter_role"/>
+    <partnerLink name="PartyEventsDbAdapter" partnerLinkType="ns3:PartyEventsDbAdapter_plt"
+                 partnerRole="PartyEventsDbAdapter_role"/>
+  </partnerLinks>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <variables>
+    <!-- Reference to the message passed as input during initiation -->
+    <variable name="inputVariable" messageType="ns1:Consume_Message_msg"/>
+    <variable name="partyEventDbVariable" messageType="ns3:PartyeventsCollection_msg"/>
+    <variable name="partyFinanceDbAdapter" messageType="ns2:PartyfinanceeventsCollection_msg"/>
+  </variables>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="main">
+
+    <!-- Receive input from requestor. (Note: This maps to operation defined in EventsBPELProcess.wsdl) -->
+    <receive name="receiveInput" partnerLink="PartyEventJMSConsumer" portType="ns1:Consume_Message_ptt"
+             operation="Consume_Message" variable="inputVariable" createInstance="yes"/>
+    <if name="If1">
+      <else></else>
+    </if>
+  </sequence>
+</process>

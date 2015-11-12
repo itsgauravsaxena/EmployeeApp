@@ -1,0 +1,28 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+   <entry key="PARTYFINANCEEVENTS.EVENT_TYPE:db_column_type">VARCHAR2</entry>
+   <entry key="PARTYFINANCEEVENTS.APP_AMT:db_column_type">NUMBER</entry>
+   <entry key="PARTYFINANCEEVENTS.TRANS_DATE:db_column_type">DATE</entry>
+   <entry key="PARTYFINANCEEVENTS.EST_AMT:db_column_type">NUMBER</entry>
+   <entry key="PARTYFINANCEEVENTS.EVENT_TYPE:db_column_not_null">false</entry>
+   <entry key="PARTYFINANCEEVENTS.ACT_AMT:db_column_scale">0</entry>
+   <entry key="PARTYFINANCEEVENTS.TRANS_DATE:db_column_not_null">false</entry>
+   <entry key="PARTYFINANCEEVENTS.ACT_AMT:db_column_not_null">true</entry>
+   <entry key="PARTYFINANCEEVENTS:db_column_4">TRANS_DATE</entry>
+   <entry key="PARTYFINANCEEVENTS:db_column_3">EVENT_TYPE</entry>
+   <entry key="PARTYFINANCEEVENTS.EVENT_TYPE:db_column_size">20</entry>
+   <entry key="PARTYFINANCEEVENTS:db_column_2">APP_AMT</entry>
+   <entry key="PARTYFINANCEEVENTS.ACT_AMT:db_column_type">NUMBER</entry>
+   <entry key="PARTYFINANCEEVENTS:db_column_1">ACT_AMT</entry>
+   <entry key="PARTYFINANCEEVENTS:db_column_0">EST_AMT</entry>
+   <entry key="PARTYFINANCEEVENTS.EST_AMT:db_column_not_null">true</entry>
+   <entry key="PARTYFINANCEEVENTS.EST_AMT:db_column_scale">0</entry>
+   <entry key="PARTYFINANCEEVENTS.APP_AMT:db_column_scale">0</entry>
+   <entry key="PARTYFINANCEEVENTS.APP_AMT:db_column_precision">20</entry>
+   <entry key="PARTYFINANCEEVENTS.APP_AMT:db_column_not_null">true</entry>
+   <entry key="PARTYFINANCEEVENTS.EST_AMT:db_column_precision">20</entry>
+   <entry key="root_descriptor_alias">PARTYFINANCEEVENTS</entry>
+   <entry key="PARTYFINANCEEVENTS:db_table_type">TABLE</entry>
+   <entry key="PARTYFINANCEEVENTS.ACT_AMT:db_column_precision">20</entry>
+</properties>

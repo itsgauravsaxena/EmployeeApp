@@ -1,0 +1,28 @@
+<wsdl:definitions
+     name="PartFinanceDbAdapter"
+     targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/EmployeeApp/PublishMultiXMLtest/PartFinanceDbAdapter"
+     xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/EmployeeApp/PublishMultiXMLtest/PartFinanceDbAdapter"
+     xmlns:jca="http://xmlns.oracle.com/pcbpel/wsdl/jca/"
+     xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/"
+     xmlns:top="http://xmlns.oracle.com/pcbpel/adapter/db/top/PartFinanceDbAdapter"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    >
+  <plt:partnerLinkType name="PartFinanceDbAdapter_plt" >
+    <plt:role name="PartFinanceDbAdapter_role" >
+      <plt:portType name="tns:PartFinanceDbAdapter_ptt" />
+    </plt:role>
+  </plt:partnerLinkType>
+    <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" >
+        <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/top/PartFinanceDbAdapter" schemaLocation="../Schemas/PartFinanceDbAdapter_table.xsd" />
+      </schema>
+    </wsdl:types>
+    <wsdl:message name="PartyfinanceeventsCollection_msg">
+        <wsdl:part name="PartyfinanceeventsCollection" element="top:PartyfinanceeventsCollection"/>
+    </wsdl:message>
+    <wsdl:portType name="PartFinanceDbAdapter_ptt">
+        <wsdl:operation name="merge">
+            <wsdl:input message="tns:PartyfinanceeventsCollection_msg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

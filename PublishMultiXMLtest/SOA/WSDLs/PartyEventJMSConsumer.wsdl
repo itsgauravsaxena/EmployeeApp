@@ -1,0 +1,30 @@
+<wsdl:definitions
+     name="PartyEventJMSConsumer"
+     targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/jms/EmployeeApp/PublishMultiXMLtest/PartyEventJMSConsumer"
+     xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/jms/EmployeeApp/PublishMultiXMLtest/PartyEventJMSConsumer"
+     xmlns:jca="http://xmlns.oracle.com/pcbpel/wsdl/jca/"
+     xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/"
+     xmlns:pc="http://xmlns.oracle.com/pcbpel/"
+     xmlns:opaque="http://xmlns.oracle.com/pcbpel/adapter/opaque/"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    >
+  <plt:partnerLinkType name="Consume_Message_plt" >
+    <plt:role name="Consume_Message_role" >
+      <plt:portType name="tns:Consume_Message_ptt" />
+    </plt:role>
+  </plt:partnerLinkType>
+    <wsdl:types>
+    <schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/opaque/"
+            xmlns="http://www.w3.org/2001/XMLSchema" >
+      <element name="opaqueElement" type="base64Binary" />
+    </schema>
+    </wsdl:types>
+    <wsdl:message name="Consume_Message_msg">
+        <wsdl:part name="opaque" element="opaque:opaqueElement"/>
+    </wsdl:message>
+    <wsdl:portType name="Consume_Message_ptt">
+        <wsdl:operation name="Consume_Message">
+            <wsdl:input message="tns:Consume_Message_msg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

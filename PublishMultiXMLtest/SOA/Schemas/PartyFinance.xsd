@@ -1,9 +1,32 @@
 <?xml version="1.0" encoding="windows-1252" ?>
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pf="http://www.oracle.com/PartyFinance/V0"
             targetNamespace="http://www.oracle.com/PartyFinance/V0" elementFormDefault="qualified">
-  <xsd:element name="PartyFinanceEvent">
+  <xsd:element name="PartyFinanceEvent" type="pf:PartyFinanceEventType">
     <xsd:annotation>
       <xsd:documentation>A sample element</xsd:documentation>
     </xsd:annotation>
   </xsd:element>
+  <xsd:complexType name="BudgetDetailsType">
+    <xsd:sequence>
+      <xsd:element name="EstimatedBudget" type="xsd:int"/>
+      <xsd:element name="ActualBudget" type="xsd:int"/>
+      <xsd:element name="ApprovedBudget" type="xsd:int"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="EventType">
+    <xsd:sequence>
+      <xsd:element name="EventName" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="FinanceEventType">
+    <xsd:sequence>
+      <xsd:element name="BudgetDetails" type="pf:BudgetDetailsType"/>
+      <xsd:element name="Events" type="pf:EventType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="PartyFinanceEventType">
+    <xsd:sequence maxOccurs="unbounded">
+      <xsd:element name="FinanceEvent" type="pf:FinanceEventType"/>
+    </xsd:sequence>
+  </xsd:complexType>
 </xsd:schema>

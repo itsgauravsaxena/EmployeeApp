@@ -1,0 +1,33 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<xs:schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/top/PartyEventsDbAdapter" xmlns="http://xmlns.oracle.com/pcbpel/adapter/db/top/PartyEventsDbAdapter" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <xs:element name="PartyeventsCollection" type="PartyeventsCollection"/>
+   <xs:complexType name="PartyeventsCollection">
+      <xs:sequence>
+         <xs:element name="Partyevents" type="Partyevents" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="Partyevents">
+      <xs:sequence>
+         <xs:element name="prtyName" type="string40"/>
+         <xs:element name="custNumr" type="string20" minOccurs="0" nillable="true"/>
+         <xs:element name="prtyAddr" type="string100" minOccurs="0" nillable="true"/>
+         <xs:element name="eventType" type="string20" minOccurs="0" nillable="true"/>
+         <xs:element name="eventDate" type="xs:dateTime" minOccurs="0" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:simpleType name="string40">
+      <xs:restriction base="xs:string">
+         <xs:maxLength value="40"/>
+      </xs:restriction>
+   </xs:simpleType>
+   <xs:simpleType name="string20">
+      <xs:restriction base="xs:string">
+         <xs:maxLength value="20"/>
+      </xs:restriction>
+   </xs:simpleType>
+   <xs:simpleType name="string100">
+      <xs:restriction base="xs:string">
+         <xs:maxLength value="100"/>
+      </xs:restriction>
+   </xs:simpleType>
+</xs:schema>
