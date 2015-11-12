@@ -1,0 +1,19 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+   <entry key="TABLE1.SUBCODE:db_column_precision">12</entry>
+   <entry key="TABLE1.EVENT:db_column_scale">0</entry>
+   <entry key="TABLE1:db_column_2">TRANSDATE</entry>
+   <entry key="TABLE1:db_column_1">SUBCODE</entry>
+   <entry key="TABLE1.EVENT:db_column_precision">12</entry>
+   <entry key="TABLE1.SUBCODE:db_column_scale">0</entry>
+   <entry key="TABLE1:db_column_0">EVENT</entry>
+   <entry key="TABLE1.TRANSDATE:db_column_not_null">false</entry>
+   <entry key="TABLE1.EVENT:db_column_type">NUMBER</entry>
+   <entry key="TABLE1.SUBCODE:db_column_type">NUMBER</entry>
+   <entry key="TABLE1.EVENT:db_column_not_null">false</entry>
+   <entry key="TABLE1:db_table_type">TABLE</entry>
+   <entry key="TABLE1.TRANSDATE:db_column_type">DATE</entry>
+   <entry key="TABLE1.SUBCODE:db_column_not_null">false</entry>
+   <entry key="root_descriptor_alias">TABLE1</entry>
+</properties>

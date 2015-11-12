@@ -1,0 +1,23 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+   <entry key="EMPLOYEE.EMPNO:db_column_not_null">false</entry>
+   <entry key="EMPLOYEE.EMPNO:db_column_type">NUMBER</entry>
+   <entry key="EMPLOYEE.AGE:db_column_size">3</entry>
+   <entry key="EMPLOYEE.EMPNAME:db_column_type">VARCHAR2</entry>
+   <entry key="EMPLOYEE.EMPNO:db_column_precision">3</entry>
+   <entry key="EMPLOYEE.EMPNAME:db_column_not_null">false</entry>
+   <entry key="EMPLOYEE.AGE:db_column_not_null">false</entry>
+   <entry key="return_single_result_set">false</entry>
+   <entry key="EMPLOYEE.EMPNO:db_column_scale">0</entry>
+   <entry key="EMPLOYEE:db_table_type">TABLE</entry>
+   <entry key="EMPLOYEE.STARTDATE:db_column_type">DATE</entry>
+   <entry key="root_descriptor_alias">EMPLOYEE</entry>
+   <entry key="EMPLOYEE.EMPNAME:db_column_size">50</entry>
+   <entry key="EMPLOYEE:db_column_3">STARTDATE</entry>
+   <entry key="EMPLOYEE:db_column_2">AGE</entry>
+   <entry key="EMPLOYEE:db_column_1">EMPNAME</entry>
+   <entry key="EMPLOYEE:db_column_0">EMPNO</entry>
+   <entry key="EMPLOYEE.AGE:db_column_type">VARCHAR2</entry>
+   <entry key="EMPLOYEE.STARTDATE:db_column_not_null">false</entry>
+</properties>

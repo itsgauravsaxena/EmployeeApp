@@ -1,0 +1,82 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Thu Nov 12 17:37:29 CET 2015
+  Author:  gaursaxe
+  Type: BPEL 2.0 Process
+  Purpose: One Way BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="PartyEventBPELProcess"
+               targetNamespace="http://xmlns.oracle.com/EmployeeApp/PublisherXMLTest/PartyEventBPELProcess"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://xmlns.oracle.com/EmployeeApp/PublisherXMLTest/PartyEventBPELProcess"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:ui="http://xmlns.oracle.com/soa/designer"
+               xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns1="http://xmlns.oracle.com/pcbpel/adapter/jms/EmployeeApp/PublisherXMLTest/PartyEventQueueAdapter"
+         xmlns:ns2="http://xmlns.oracle.com/pcbpel/adapter/db/EmployeeApp/PublisherXMLTest/PartyEventDbReference"
+         xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+
+  <import ui:processWSDL="true" namespace="http://xmlns.oracle.com/EmployeeApp/PublisherXMLTest/PartyEventBPELProcess" location="../WSDLs/PartyEventBPELProcess.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      PARTNERLINKS                                                      
+      List of services participating in this BPEL process               
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  --> 
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="partyeventbpelprocess_client" partnerLinkType="client:PartyEventBPELProcess" myRole="PartyEventBPELProcessProvider"/>
+    <partnerLink name="PartyEventQueueAdapter" partnerLinkType="ns1:Consume_Message_plt" myRole="Consume_Message_role"/>
+    <partnerLink name="PartyEventDbReference" partnerLinkType="ns2:PartyEventDbReference_plt"
+                 partnerRole="PartyEventDbReference_role"/>
+  </partnerLinks>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <variables>
+    <!-- Reference to the message passed as input during initiation -->
+    <variable name="inputVariable" messageType="ns1:Consume_Message_msg"/>
+    <variable name="InvokePartyEvent_Inputvariable" messageType="ns2:PartyeventsCollection_msg"/>
+  </variables>
+  <faultHandlers>
+    <catchAll>
+      <empty name="DoNothing"/>
+    </catchAll>
+  </faultHandlers>
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="main">
+
+    <!-- Receive input from requestor. (Note: This maps to operation defined in PartyEventBPELProcess.wsdl) -->
+    <receive name="receiveInput" partnerLink="PartyEventQueueAdapter" portType="ns1:Consume_Message_ptt"
+             operation="Consume_Message" variable="inputVariable" createInstance="yes"/>
+    <assign name="Xform_PartyEvent">
+      <bpelx:annotation>
+        <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+      </bpelx:annotation>
+      <copy>
+        <from>ora:doXSLTransformForDoc("../Transformations/Xform_PartyEvents.xsl", $inputVariable.body)</from>
+        <to variable="InvokePartyEvent_Inputvariable" part="PartyeventsCollection"/>
+      </copy>
+    </assign>
+    <invoke name="Invoke_PartyEvent" bpelx:invokeAsDetail="no" partnerLink="PartyEventDbReference"
+            portType="ns2:PartyEventDbReference_ptt" operation="merge" inputVariable="InvokePartyEvent_Inputvariable"/>
+  </sequence>
+</process>

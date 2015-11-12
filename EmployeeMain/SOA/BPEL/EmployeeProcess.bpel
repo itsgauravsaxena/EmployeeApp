@@ -1,0 +1,60 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Fri Sep 18 22:20:47 CEST 2015
+  Author:  gaursaxe
+  Type: BPEL 2.0 Process
+  Purpose: Empty BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="EmployeeProcess"
+               targetNamespace="http://xmlns.oracle.com/EmployeeApp/EmployeeMain/EmployeeProcess"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://xmlns.oracle.com/EmployeeApp/EmployeeMain/EmployeeProcess"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns1="http://xmlns.oracle.com/pcbpel/adapter/db/EmployeeApp/EmployeeMain/EmployeeConsumer"
+         xmlns:ns2="http://xmlns.oracle.com/pcbpel/adapter/db/EmployeeApp/EmployeeMain/dbReference"
+         xmlns:bpelx="http://schemas.oracle.com/bpel/extension" xmlns:ui="http://xmlns.oracle.com/soa/designer">
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/EmployeeApp/EmployeeMain/EmployeeConsumer"
+          location="../WSDLs/EmployeeConsumer.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"
+          ui:processWSDL="true"/>
+  <partnerLinks>
+    <partnerLink name="EmployeeConsumer" partnerLinkType="ns1:EmployeeConsumer_plt" myRole="EmployeeConsumer_role"/>
+    <partnerLink name="dbReference" partnerLinkType="ns2:dbReference_plt" partnerRole="dbReference_role"/>
+  </partnerLinks>
+  <variables>
+    <variable name="Employe_InputVariable" messageType="ns1:EmployeeCollection_msg"/>
+    <variable name="EmployeeTableInput" messageType="ns2:EmployeeCollection_msg"/>
+  </variables>
+  <faultHandlers>
+    <catchAll>
+      <empty name="DoNothing"/>
+    </catchAll>
+  </faultHandlers>
+  <sequence name="main">
+    <receive name="Receive" partnerLink="EmployeeConsumer" variable="Employe_InputVariable"
+             portType="ns1:EmployeeConsumer_ptt" operation="receive" createInstance="yes"/>
+    <assign name="Transform">
+      <bpelx:annotation>
+        <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+      </bpelx:annotation>
+      <copy>
+        <from>ora:doXSLTransformForDoc("../Transformations/EmpTransformation.xsl", $Employe_InputVariable.EmployeeCollection)</from>
+        <to variable="EmployeeTableInput" part="EmployeeCollection"/>
+      </copy>
+    </assign>
+    <invoke name="Invokedb" partnerLink="dbReference" portType="ns2:dbReference_ptt"
+            operation="merge" inputVariable="EmployeeTableInput" bpelx:invokeAsDetail="no"/>
+  </sequence>
+</process>

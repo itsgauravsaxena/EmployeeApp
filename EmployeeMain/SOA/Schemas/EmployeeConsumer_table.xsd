@@ -1,0 +1,27 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<xs:schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/top/EmployeeConsumer" xmlns="http://xmlns.oracle.com/pcbpel/adapter/db/top/EmployeeConsumer" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <xs:element name="EmployeeCollection" type="EmployeeCollection"/>
+   <xs:complexType name="EmployeeCollection">
+      <xs:sequence>
+         <xs:element name="Employee" type="Employee" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="Employee">
+      <xs:sequence>
+         <xs:element name="empno" type="xs:int" nillable="true"/>
+         <xs:element name="empname" type="string50" minOccurs="0" nillable="true"/>
+         <xs:element name="age" type="string3" minOccurs="0" nillable="true"/>
+         <xs:element name="startdate" type="xs:dateTime" minOccurs="0" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:simpleType name="string50">
+      <xs:restriction base="xs:string">
+         <xs:maxLength value="50"/>
+      </xs:restriction>
+   </xs:simpleType>
+   <xs:simpleType name="string3">
+      <xs:restriction base="xs:string">
+         <xs:maxLength value="3"/>
+      </xs:restriction>
+   </xs:simpleType>
+</xs:schema>

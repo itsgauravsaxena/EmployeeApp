@@ -1,0 +1,15 @@
+<adapter-config name="dbReference" adapter="db" wsdlLocation="../WSDLs/dbReference.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory UIConnectionName="Test" location="eis/DB/test"/>
+  <endpoint-interaction portType="dbReference_ptt" operation="merge">
+    <interaction-spec className="oracle.tip.adapter.db.DBWriteInteractionSpec">
+      <property name="DescriptorName" value="dbReference.Employee"/>
+      <property name="DmlType" value="merge"/>
+      <property name="MappingsMetaDataURL" value="dbReference-or-mappings.xml"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+      <property name="OptimizeMerge" value="true"/>
+      <property name="DetectOmissions" value="true"/>
+    </interaction-spec>
+  </endpoint-interaction>
+
+</adapter-config>

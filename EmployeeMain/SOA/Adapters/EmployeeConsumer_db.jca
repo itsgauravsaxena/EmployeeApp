@@ -1,0 +1,18 @@
+<adapter-config name="EmployeeConsumer" adapter="db" wsdlLocation="../WSDLs/EmployeeConsumer.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory UIConnectionName="TESTDB" location="eis/DB/TESTDB"/>
+  <endpoint-activation portType="EmployeeConsumer_ptt" operation="receive">
+    <activation-spec className="oracle.tip.adapter.db.DBActivationSpec">
+      <property name="DescriptorName" value="EmployeeConsumer.Employee"/>
+      <property name="QueryName" value="EmployeeConsumerSelect"/>
+      <property name="MappingsMetaDataURL" value="EmployeeConsumer-or-mappings.xml"/>
+      <property name="PollingStrategy" value="DeletePollingStrategy"/>
+      <property name="PollingInterval" value="5"/>
+      <property name="MaxRaiseSize" value="1"/>
+      <property name="MaxTransactionSize" value="10"/>
+      <property name="NumberOfThreads" value="1"/>
+      <property name="ReturnSingleResultSet" value="false"/>
+    </activation-spec>
+  </endpoint-activation>
+
+</adapter-config>

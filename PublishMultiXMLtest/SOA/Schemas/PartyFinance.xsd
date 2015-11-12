@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pf="http://www.oracle.com/PartyFinance/V0"
+            targetNamespace="http://www.oracle.com/PartyFinance/V0" elementFormDefault="qualified">
+  <xsd:element name="PartyFinanceEvent">
+    <xsd:annotation>
+      <xsd:documentation>A sample element</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+</xsd:schema>

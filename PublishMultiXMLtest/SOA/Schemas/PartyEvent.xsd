@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:po="http://www.oracle.com/PartyObject/V0"
+            targetNamespace="http://www.oracle.com/PartyObject/V0" elementFormDefault="qualified">
+   <xsd:element name="PartyEvent" type="po:PartyEventType">
+    <xsd:annotation>
+      <xsd:documentation>A sample element</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:complexType name="PartyDetailsType">
+    <xsd:sequence>
+      <xsd:element name="PartyName" type="xsd:string"/>
+      <xsd:element name="CustomerNumber" type="xsd:int"/>
+      <xsd:element name="PartyAddress" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="EventDetailsType">
+    <xsd:sequence>
+      <xsd:element name="Event" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="PartyObjectType">
+    <xsd:sequence>
+      <xsd:element name="PartyDetails" type="po:PartyDetailsType"/>
+      <xsd:element name="EventDetails" type="po:EventDetailsType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="PartyEventType">
+    <xsd:sequence maxOccurs="unbounded">
+      <xsd:element name="PartyEventStructure" type="po:PartyObjectType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

@@ -1,0 +1,81 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Wed Nov 11 18:18:56 CET 2015
+  Author:  gaursaxe
+  Type: BPEL 2.0 Process
+  Purpose: Asynchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="BPELProcess1"
+         targetNamespace="http://xmlns.oracle.com/EmployeeApp/PublishProject/BPELProcess1"
+         xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:client="http://xmlns.oracle.com/EmployeeApp/PublishProject/BPELProcess1"
+         xmlns:ora="http://schemas.oracle.com/xpath/extension"
+         xmlns:ui="http://xmlns.oracle.com/soa/designer"
+         xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns1="http://xmlns.oracle.com/pcbpel/adapter/jms/EmployeeApp/PublishProject/ConsumeMDMEvents"
+         xmlns:ns2="http://xmlns.oracle.com/pcbpel/adapter/file/EmployeeApp/PublishProject/fileReference">
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        PARTNERLINKS                                                      
+        List of services participating in this BPEL process               
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    -->
+    <import namespace="http://xmlns.oracle.com/pcbpel/adapter/jms/EmployeeApp/PublishProject/ConsumeMDMEvents"
+            location="../WSDLs/ConsumeMDMEvents.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"
+            ui:processWSDL="true"/>
+    <partnerLinks>
+        <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+        <partnerLink name="ConsumeMDMEvents" partnerLinkType="ns1:Consume_Message_plt" myRole="Consume_Message_role"/>
+        <partnerLink name="fileReference" partnerLinkType="ns2:Write_plt" partnerRole="Write_role"/>
+    </partnerLinks>
+
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        VARIABLES                                                        
+        List of messages and XML documents used within this BPEL process 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    -->
+    <variables>
+        <!-- Reference to the message passed as input during initiation -->
+        <variable name="inputVariable" messageType="ns1:Consume_Message_msg"/>
+
+        <!-- Reference to the message that will be sent back to the requester during callback -->        
+        <variable name="fileAdapterVariable" messageType="ns2:Write_msg"/>
+    </variables>
+
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+       ORCHESTRATION LOGIC                                               
+       Set of activities coordinating the flow of messages across the    
+       services integrated within this business process                  
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    -->
+    <sequence name="main">
+        <!-- Receive input from requestor. (Note: This maps to operation defined in BPELProcess1.wsdl) -->
+        <receive name="receiveInput" partnerLink="ConsumeMDMEvents" portType="ns1:Consume_Message_ptt"
+                 operation="Consume_Message" variable="inputVariable" createInstance="yes"/>
+        <assign name="Transformation1">
+            <bpelx:annotation>
+                <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+            </bpelx:annotation>
+            <copy>
+                <from>ora:doXSLTransformForDoc("../Transformations/Transformation_1.xsl", $inputVariable.opaque)</from>
+                <to variable="fileAdapterVariable" part="opaque"/>
+            </copy>
+        </assign>
+        <invoke name="Invoke1" bpelx:invokeAsDetail="no" partnerLink="fileReference" portType="ns2:Write_ptt"
+                operation="Write" inputVariable="fileAdapterVariable"/>
+        <!-- 
+          Asynchronous callback to the requester. (Note: the callback location and correlation id is transparently handled using WS-addressing.)
+        -->
+    </sequence>
+</process>
