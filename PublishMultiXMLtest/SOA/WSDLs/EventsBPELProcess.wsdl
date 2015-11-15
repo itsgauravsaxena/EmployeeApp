@@ -1,45 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <wsdl:definitions name="EventsBPELProcess"
-             targetNamespace="http://xmlns.oracle.com/EmployeeApp/PublishMultiXMLtest/EventsBPELProcess"
-             xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
-             xmlns:client="http://xmlns.oracle.com/EmployeeApp/PublishMultiXMLtest/EventsBPELProcess"
-             xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype">
-
-	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                  targetNamespace="http://xmlns.oracle.com/EmployeeApp/PublishMultiXMLtest/EventsBPELProcess"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:client="http://xmlns.oracle.com/EmployeeApp/PublishMultiXMLtest/EventsBPELProcess"
+                  xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+                  xmlns:po="http://www.oracle.com/PartyObject/V0"
+                  xmlns:pf="http://www.oracle.com/PartyFinance/V0">
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	TYPE DEFINITION - List of services participating in this BPEL process
 	The default output of the BPEL designer uses strings as input and 
 	output to the BPEL Process. But you can define or import any XML 
 	Schema type and use them as part of the message types.
-	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->   
-	<wsdl:types>
-		<schema xmlns="http://www.w3.org/2001/XMLSchema">
-			<import namespace="http://xmlns.oracle.com/EmployeeApp/PublishMultiXMLtest/EventsBPELProcess" schemaLocation="../Schemas/EventsBPELProcess.xsd" />
-		</schema>
-	</wsdl:types>
-
-	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <wsdl:types>
+    <schema xmlns="http://www.w3.org/2001/XMLSchema">
+      <import namespace="http://xmlns.oracle.com/EmployeeApp/PublishMultiXMLtest/EventsBPELProcess"
+              schemaLocation="../Schemas/EventsBPELProcess.xsd"/>
+    </schema>
+    <schema xmlns="http://www.w3.org/2001/XMLSchema">
+      <import namespace="http://www.oracle.com/PartyObject/V0" schemaLocation="../Schemas/PartyEvent.xsd"/>
+    </schema>
+    <schema xmlns="http://www.w3.org/2001/XMLSchema">
+      <import namespace="http://www.oracle.com/PartyFinance/V0" schemaLocation="../Schemas/PartyFinance.xsd"/>
+    </schema>
+  </wsdl:types>
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	MESSAGE TYPE DEFINITION - Definition of the message types used as 
 	part of the port type defintions
-	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->      
-	<wsdl:message name="EventsBPELProcessRequestMessage">
-		<wsdl:part name="payload" element="client:process"/>
-	</wsdl:message>
-	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <wsdl:message name="EventsBPELProcessRequestMessage">
+    <wsdl:part name="payload" element="client:process"/>
+  </wsdl:message>
+  <wsdl:message name="PartyEventMessage">
+    <wsdl:part name="payload" element="po:PartyEvent"/>
+  </wsdl:message>
+    <wsdl:message name="PartyFinanceEventMessage">
+    <wsdl:part name="payload" element="pf:PartyFinanceEvent"/>
+  </wsdl:message>
+
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	PORT TYPE DEFINITION - A port type groups a set of operations into
 	a logical service unit.
 	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-
-	<!-- portType implemented by the EventsBPELProcess BPEL process -->
-	<wsdl:portType name="EventsBPELProcess">
-		<wsdl:operation name="process">
-			<wsdl:input  message="client:EventsBPELProcessRequestMessage" />
-		</wsdl:operation>
-	</wsdl:portType>
-
-	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  <!-- portType implemented by the EventsBPELProcess BPEL process -->
+  <wsdl:portType name="EventsBPELProcess">
+    <wsdl:operation name="process">
+      <wsdl:input message="client:EventsBPELProcessRequestMessage"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	PARTNER LINK TYPE DEFINITION
-	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ --> 
-	<plnk:partnerLinkType name="EventsBPELProcess">
-		<plnk:role name="EventsBPELProcessProvider" portType="client:EventsBPELProcess"/>
-	</plnk:partnerLinkType>
+	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <plnk:partnerLinkType name="EventsBPELProcess">
+    <plnk:role name="EventsBPELProcessProvider" portType="client:EventsBPELProcess"/>
+  </plnk:partnerLinkType>
 </wsdl:definitions>

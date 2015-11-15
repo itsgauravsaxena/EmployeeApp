@@ -10,38 +10,51 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 -->
 <process name="EventsBPELProcess"
-               targetNamespace="http://xmlns.oracle.com/EmployeeApp/PublishMultiXMLtest/EventsBPELProcess"
-               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
-               xmlns:client="http://xmlns.oracle.com/EmployeeApp/PublishMultiXMLtest/EventsBPELProcess"
-               xmlns:ora="http://schemas.oracle.com/xpath/extension"
-               xmlns:ui="http://xmlns.oracle.com/soa/designer"
-               xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         targetNamespace="http://xmlns.oracle.com/EmployeeApp/PublishMultiXMLtest/EventsBPELProcess"
+         xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:client="http://xmlns.oracle.com/EmployeeApp/PublishMultiXMLtest/EventsBPELProcess"
+         xmlns:ora="http://schemas.oracle.com/xpath/extension" xmlns:ui="http://xmlns.oracle.com/soa/designer"
+         xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns0="http://xmlns.oracle.com/pcbpel/adapter/opaque/"
          xmlns:ns1="http://xmlns.oracle.com/pcbpel/adapter/jms/EmployeeApp/PublishMultiXMLtest/PartyEventJMSConsumer"
          xmlns:ns2="http://xmlns.oracle.com/pcbpel/adapter/db/EmployeeApp/PublishMultiXMLtest/PartFinanceDbAdapter"
          xmlns:ns3="http://xmlns.oracle.com/pcbpel/adapter/db/EmployeeApp/PublishMultiXMLtest/PartyEventsDbAdapter"
-         xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
-
-  <import ui:processWSDL="true" namespace="http://xmlns.oracle.com/EmployeeApp/PublishMultiXMLtest/EventsBPELProcess" location="../WSDLs/EventsBPELProcess.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+         xmlns:bpelx="http://schemas.oracle.com/bpel/extension" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions" xmlns:ess="http://xmlns.oracle.com/scheduler"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap">
+        <import ui:processWSDL="true" namespace="http://xmlns.oracle.com/EmployeeApp/PublishMultiXMLtest/EventsBPELProcess"
+          location="../WSDLs/EventsBPELProcess.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+        <import location="oracle.xml.parser.v2.XMLElement" importType="http://schemas.oracle.com/bpel/extension/java"/>
+        <!--import location="oracle.soa.common.util.Base64Encoder" importType="http://schemas.oracle.com/bpel/extension/java"/>
+        <import location="oracle.soa.common.util.Base64Encoder" importType="http://schemas.oracle.com/bpel/extension/java"/-->
   <!-- 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       PARTNERLINKS                                                      
       List of services participating in this BPEL process               
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  --> 
+  -->
   <partnerLinks>
     <!-- 
       The 'client' role represents the requester of this service. It is 
       used for callback. The location and correlation information associated
       with the client role are automatically set using WS-Addressing.
     -->
-    <partnerLink name="eventsbpelprocess_client" partnerLinkType="client:EventsBPELProcess" myRole="EventsBPELProcessProvider"/>
+    <partnerLink name="eventsbpelprocess_client" partnerLinkType="client:EventsBPELProcess"
+                 myRole="EventsBPELProcessProvider"/>
     <partnerLink name="PartyEventJMSConsumer" partnerLinkType="ns1:Consume_Message_plt" myRole="Consume_Message_role"/>
     <partnerLink name="PartFinanceDbAdapter" partnerLinkType="ns2:PartFinanceDbAdapter_plt"
                  partnerRole="PartFinanceDbAdapter_role"/>
     <partnerLink name="PartyEventsDbAdapter" partnerLinkType="ns3:PartyEventsDbAdapter_plt"
                  partnerRole="PartyEventsDbAdapter_role"/>
   </partnerLinks>
-
   <!-- 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       VARIABLES                                                        
@@ -53,8 +66,15 @@
     <variable name="inputVariable" messageType="ns1:Consume_Message_msg"/>
     <variable name="partyEventDbVariable" messageType="ns3:PartyeventsCollection_msg"/>
     <variable name="partyFinanceDbAdapter" messageType="ns2:PartyfinanceeventsCollection_msg"/>
+    <variable name="PartyEvent_InputVariable" messageType="client:PartyEventMessage"/>
+    <variable name="PartyFinanceEvent_InputVariable" messageType="client:PartyFinanceEventMessage"/>
+    <variable name="StringValue_OpaqueInput" type="xsd:string"/>
   </variables>
-
+  <faultHandlers>
+    <catchAll>
+      <empty name="Empty1"/>
+    </catchAll>
+  </faultHandlers>
   <!-- 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
      ORCHESTRATION LOGIC                                               
@@ -63,12 +83,42 @@
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   -->
   <sequence name="main">
-
     <!-- Receive input from requestor. (Note: This maps to operation defined in EventsBPELProcess.wsdl) -->
     <receive name="receiveInput" partnerLink="PartyEventJMSConsumer" portType="ns1:Consume_Message_ptt"
              operation="Consume_Message" variable="inputVariable" createInstance="yes"/>
-    <if name="If1">
-      <else></else>
-    </if>
+    <extensionActivity>
+      <bpelx:exec name="DecodeNative" language="java">
+        <![CDATA[addAuditTrailEntry("Base64decode started");      
+try {     
+XMLElement input = (XMLElement) getVariableData("inputVariable", "opaque", "/ns0:opaqueElement");     
+//XMLElement input = (XMLElement) getVariableData("inputVariable","payload","client:input");      
+String input_str = input.getTextContent();      
+addAuditTrailEntry("Base64decode input_str="+input_str);      
+oracle.soa.common.util.Base64Decoder decoder = new oracle.soa.common.util.Base64Decoder();          
+String decoded = null;         
+decoded = decoder.decode(input_str);      
+addAuditTrailEntry("Base64decode decoded="+decoded);      
+//setVariableData("outputVariable","payload","client:result",decoded);      
+setVariableData("StringValue_OpaqueInput",decoded);   
+} catch (Exception e) {      
+  addAuditTrailEntry("Base64decode Exception: "+e.getMessage());      
+}      
+addAuditTrailEntry("Base64decode ended");]]>
+      </bpelx:exec>
+    </extensionActivity>
+    <!--assign name="Transformation1">
+      <bpelx:annotation>
+        <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+      </bpelx:annotation>
+      <copy>
+        <from>ora:doXSLTransformForDoc("../Transformations/Transformation_1.xsl", $inputVariable.opaque)</from>
+        <to variable="partyEventDbVariable" part="PartyeventsCollection"/>
+      </copy>
+    </assign-->
+    <!--assign name="Translate1">
+      <bpelx:annotation>
+        <bpelx:pattern>translate</bpelx:pattern>
+      </bpelx:annotation>
+    </assign-->
   </sequence>
 </process>
