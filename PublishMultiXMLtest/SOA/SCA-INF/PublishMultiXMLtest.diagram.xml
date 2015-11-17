@@ -15,11 +15,11 @@
         </dgm:operations>
     </dgm:gService>
     <dgm:gReference name="PartyEventsDbAdapter">
-        <dgm:body borderWidth="2" arcRad="20" X="662" Y="144" width="136" height="84">
+        <dgm:body borderWidth="2" arcRad="20" X="672" Y="144" width="136" height="84">
             <dgm:borderColor r="153" g="153" b="153"/>
             <dgm:bgColor r="255" g="255" b="255"/>
         </dgm:body>
-        <dgm:shadow arcRad="20" X="652" Y="137" width="156" height="98">
+        <dgm:shadow arcRad="20" X="662" Y="137" width="156" height="98">
             <dgm:bgColor r="196" g="228" b="240"/>
         </dgm:shadow>
         <dgm:inputPort name="PartyEventsDbAdapter" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/db/EmployeeApp/PublishMultiXMLtest/PartyEventsDbAdapter#wsdl.interface(PartyEventsDbAdapter_ptt)"/>
@@ -29,11 +29,11 @@
         </dgm:operations>
     </dgm:gReference>
     <dgm:gReference name="PartFinanceDbAdapter">
-        <dgm:body borderWidth="2" arcRad="20" X="662" Y="26" width="136" height="84">
+        <dgm:body borderWidth="2" arcRad="20" X="672" Y="26" width="136" height="84">
             <dgm:borderColor r="153" g="153" b="153"/>
             <dgm:bgColor r="255" g="255" b="255"/>
         </dgm:body>
-        <dgm:shadow arcRad="20" X="652" Y="19" width="156" height="98">
+        <dgm:shadow arcRad="20" X="662" Y="19" width="156" height="98">
             <dgm:bgColor r="196" g="228" b="240"/>
         </dgm:shadow>
         <dgm:inputPort name="PartFinanceDbAdapter" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/db/EmployeeApp/PublishMultiXMLtest/PartFinanceDbAdapter#wsdl.interface(PartFinanceDbAdapter_ptt)"/>
@@ -43,12 +43,12 @@
         </dgm:operations>
     </dgm:gReference>
     <dgm:gComponent name="EventsBPELProcess">
-        <dgm:body borderWidth="2" arcRad="20" X="345" Y="84" width="130" height="86">
+        <dgm:body borderWidth="2" arcRad="20" X="350" Y="84" width="130" height="86">
             <dgm:borderColor r="69" g="113" b="140"/>
             <dgm:lightBgColor r="166" g="208" b="230"/>
             <dgm:darkBgColor r="99" g="162" b="201"/>
         </dgm:body>
-        <dgm:shadow arcRad="20" X="335" Y="77" width="150" height="102">
+        <dgm:shadow arcRad="20" X="340" Y="77" width="150" height="102">
             <dgm:bgColor r="196" g="228" b="240"/>
         </dgm:shadow>
         <dgm:inputPort name="eventsbpelprocess_client" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/EmployeeApp/PublishMultiXMLtest/EventsBPELProcess#wsdl.interface(EventsBPELProcess)"/>
@@ -58,21 +58,21 @@
         <dgm:nodeIcon URI="/oracle/tip/tools/ide/bpel/shared/plugins/resources/images/soa/process_20x20.png" X="10" Y="4" width="20" height="20"/>
     </dgm:gComponent>
     <dgm:gWireLink source="PartyEventJMSConsumer" target="EventsBPELProcess/PartyEventJMSConsumer" width="2">
-        <dgm:gSegment X1="168" Y1="134" X2="335" Y2="134"/>
+        <dgm:gSegment X1="168" Y1="134" X2="340" Y2="134"/>
         <dgm:baseColor r="153" g="153" b="153"/>
         <dgm:selectedColor r="49" g="106" b="196"/>
     </dgm:gWireLink>
     <dgm:gWireLink source="EventsBPELProcess/PartFinanceDbAdapter" target="PartFinanceDbAdapter" width="2">
-        <dgm:gSegment X1="485" Y1="109" X2="509" Y2="109"/>
-        <dgm:gSegment X1="509" Y1="109" X2="509" Y2="36"/>
-        <dgm:gSegment X1="509" Y1="36" X2="652" Y2="36"/>
+        <dgm:gSegment X1="490" Y1="109" X2="514" Y2="109"/>
+        <dgm:gSegment X1="514" Y1="109" X2="514" Y2="36"/>
+        <dgm:gSegment X1="514" Y1="36" X2="662" Y2="36"/>
         <dgm:baseColor r="153" g="153" b="153"/>
         <dgm:selectedColor r="49" g="106" b="196"/>
     </dgm:gWireLink>
     <dgm:gWireLink source="EventsBPELProcess/PartyEventsDbAdapter" target="PartyEventsDbAdapter" width="2">
-        <dgm:gSegment X1="485" Y1="134" X2="509" Y2="134"/>
-        <dgm:gSegment X1="509" Y1="134" X2="509" Y2="154"/>
-        <dgm:gSegment X1="509" Y1="154" X2="652" Y2="154"/>
+        <dgm:gSegment X1="490" Y1="134" X2="514" Y2="134"/>
+        <dgm:gSegment X1="514" Y1="134" X2="514" Y2="154"/>
+        <dgm:gSegment X1="514" Y1="154" X2="662" Y2="154"/>
         <dgm:baseColor r="153" g="153" b="153"/>
         <dgm:selectedColor r="49" g="106" b="196"/>
     </dgm:gWireLink>

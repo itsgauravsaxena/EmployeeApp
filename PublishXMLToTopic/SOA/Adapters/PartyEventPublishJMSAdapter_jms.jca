@@ -1,0 +1,13 @@
+<adapter-config name="PartyEventPublishJMSAdapter" adapter="jms" wsdlLocation="../WSDLs/PartyEventPublishJMSAdapter.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/wls/test/Topic" UIJmsProvider="WLSJMS" UIConnectionName="soa12c"/>
+  <endpoint-interaction portType="Produce_Message_ptt" operation="Produce_Message">
+    <interaction-spec className="oracle.tip.adapter.jms.outbound.JmsProduceInteractionSpec">
+      <property name="TimeToLive" value="0"/>
+      <property name="PayloadType" value="TextMessage"/>
+      <property name="DeliveryMode" value="Persistent"/>
+      <property name="DestinationName" value="jms/Topic"/>
+    </interaction-spec>
+  </endpoint-interaction>
+
+</adapter-config>

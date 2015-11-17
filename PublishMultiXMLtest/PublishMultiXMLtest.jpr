@@ -68,8 +68,11 @@
    <value n="defaultPackage" v="publishmultixmltest"/>
    <hash n="oracle.ide.model.TechnologyScopeConfiguration">
       <list n="technologyScope">
+         <string v="Database"/>
+         <string v="Java"/>
          <string v="Maven"/>
          <string v="SOA"/>
+         <string v="TopLink"/>
          <string v="WSDL"/>
          <string v="WSPolicy"/>
          <string v="XML"/>

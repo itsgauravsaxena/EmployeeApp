@@ -23,12 +23,14 @@
       <string v="oracle.jdeveloper.model.PathsConfiguration/ResourceBundlesContentSet"/>
    </list>
    <list n="listOfChildren">
+      <hash><url n="URL" path="AddDurSubscriber/AddDurSubscriber.jpr"/></hash>
       <hash><url n="URL" path="Employee/Employee.jpr"/></hash>
       <hash><url n="URL" path="EmployeeMain/EmployeeMain.jpr"/></hash>
       <hash><url n="URL" path="PublisherTest/PublisherTest.jpr"/></hash>
       <hash><url n="URL" path="PublisherXMLTest/PublisherXMLTest.jpr"/></hash>
       <hash><url n="URL" path="PublishMultiXMLtest/PublishMultiXMLtest.jpr"/></hash>
       <hash><url n="URL" path="PublishProject/PublishProject.jpr"/></hash>
+      <hash><url n="URL" path="PublishXMLToTopic/PublishXMLToTopic.jpr"/></hash>
       <hash><url n="URL" path="TestInsertOrMerge/TestInsertOrMerge.jpr"/></hash>
    </list>
 </jws:workspace>

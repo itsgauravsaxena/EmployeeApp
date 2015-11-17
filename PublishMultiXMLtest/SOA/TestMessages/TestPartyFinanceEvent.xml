@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<po:PartyEventStructure xmlns:po="http://www.oracle.com/PartyEventStructure/V0">
+  <po:PartyDetails>
+    <po:PartyName>Mike Ross</po:PartyName>
+    <po:CustomerNumber>123456789101</po:CustomerNumber>
+    <po:PartyAddress>Funnygade 50, 4 st. Funnyhavn S</po:PartyAddress>
+  </po:PartyDetails>
+  <po:EventDetails>
+    <po:Event>Update</po:Event>
+  </po:EventDetails>
+</po:PartyEventStructure>

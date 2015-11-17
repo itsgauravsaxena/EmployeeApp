@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PartyEvent>
+<PartyEventStructure>
+  <PartyDetails>
+    <PartyName>Mike Ross</PartyName>
+    <CustomerNumber>123456789101</CustomerNumber>
+    <PartyAddress>Funnygade 50, 4 st. Funnyhavn S</PartyAddress>
+  </PartyDetails>
+  <EventDetails>
+    <Event>Update</Event>
+  </EventDetails>
+</PartyEventStructure>
+</PartyEvent>

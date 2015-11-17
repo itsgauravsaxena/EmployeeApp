@@ -29,7 +29,7 @@
          xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions" xmlns:ess="http://xmlns.oracle.com/scheduler"
          xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
          xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
-         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap">
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap" xmlns:ns4="http://www.oracle.com/PartyObject/V0">
         <import ui:processWSDL="true" namespace="http://xmlns.oracle.com/EmployeeApp/PublishMultiXMLtest/EventsBPELProcess"
           location="../WSDLs/EventsBPELProcess.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
         <import location="oracle.xml.parser.v2.XMLElement" importType="http://schemas.oracle.com/bpel/extension/java"/>
@@ -106,6 +106,34 @@ setVariableData("StringValue_OpaqueInput",decoded);
 addAuditTrailEntry("Base64decode ended");]]>
       </bpelx:exec>
     </extensionActivity>
+    <if name="ValidateInputMessage">
+      <documentation>
+        <![CDATA[PartyEventStructure]]>
+      </documentation>
+      <condition>contains($StringValue_OpaqueInput,'PartyEventStructure')</condition>
+      <sequence name="Sequence1">
+        <assign name="TranslateNativeToXML">
+          <copy>
+            <from>oraext:parseEscapedXML($StringValue_OpaqueInput)</from>
+            <to>$PartyEvent_InputVariable.payload</to>
+          </copy>
+        </assign>
+        <assign name="Xform_PartyObjectEvent">
+          <bpelx:annotation>
+            <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+          </bpelx:annotation>
+          <copy>
+            <from>ora:doXSLTransformForDoc("../Transformations/Xform_PartyObjectEvent.xsl", $PartyEvent_InputVariable.payload)</from>
+            <to variable="partyEventDbVariable" part="PartyeventsCollection"/>
+          </copy>
+        </assign>
+        <invoke name="InvokePartyEventDb" bpelx:invokeAsDetail="no" partnerLink="PartyEventsDbAdapter"
+                portType="ns3:PartyEventsDbAdapter_ptt" operation="merge" inputVariable="partyEventDbVariable"/>
+      </sequence>
+      <else>
+        <empty name="Empty2"/>
+      </else>
+    </if>
     <!--assign name="Transformation1">
       <bpelx:annotation>
         <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>

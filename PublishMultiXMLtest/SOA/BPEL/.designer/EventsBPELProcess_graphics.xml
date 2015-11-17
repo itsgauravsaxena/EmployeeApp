@@ -6,13 +6,14 @@
    <partnerlink_locations>
       <partnerlink name="eventsbpelprocess_client" x="0" y="30" side="left"/>
       <partnerlink name="PartFinanceDbAdapter" x="0" y="97" side="left"/>
-      <partnerlink name="PartyEventJMSConsumer" x="741" y="40" side="right"/>
-      <partnerlink name="PartyEventsDbAdapter" x="741" y="97" side="right"/>
+      <partnerlink name="PartyEventJMSConsumer" x="726" y="90" side="right"/>
+      <partnerlink name="PartyEventsDbAdapter" x="726" y="610" side="right"/>
    </partnerlink_locations>
-   <graph_layout viewport="0,0,891,403" show_swimlanes="true">
+   <graph_layout viewport="0,300,876,403" show_swimlanes="true">
       <layout_item collapsed="false" xpath="/process" type="process" showhandlers="true"/>
       <layout_item collapsed="false" xpath="/process/faultHandlers/catchAll" type="catchall"/>
       <layout_item collapsed="false" xpath="/process/sequence" type="sequence"/>
+      <layout_item collapsed="false" xpath="/process/sequence/if/sequence" type="sequence"/>
    </graph_layout>
    <bookmarks/>
 </graphics>

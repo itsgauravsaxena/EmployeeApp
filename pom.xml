@@ -15,5 +15,7 @@
     	<module>PublisherXMLTest</module>
     	<module>PublishMultiXMLtest</module>
     	<module>TestInsertOrMerge</module>
+    	<module>PublishXMLToTopic</module>
+    	<module>AddDurSubscriber</module>
     </modules>
 </project>
