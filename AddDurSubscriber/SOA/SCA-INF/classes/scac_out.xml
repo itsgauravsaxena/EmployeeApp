@@ -1,0 +1,13 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Faults>
+   <Fault>
+      <severity>warning</severity>
+      <loc>/ns:composite/ns:component[@name='PartyEventsPublishProcess/partyeventspublishprocess_client']</loc>
+      <line/>
+      <col/>
+      <file>C:\Projects\EmployeeApp\AddDurSubscriber\SOA\composite.xml</file>
+      <name>C:\Projects\EmployeeApp\AddDurSubscriber\SOA\composite.xml</name>
+      <fix/>
+      <msg>The service "partyeventspublishprocess_client" exposed by component "PartyEventsPublishProcess" is not wired to/used by any other component.</msg>
+   </Fault>
+</Faults>

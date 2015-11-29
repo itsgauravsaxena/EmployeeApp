@@ -1,0 +1,15 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<wsdl:definitions
+     name="FilterEventRemote"
+     targetNamespace="http://nordea.event.jee.soa.oracle.dk/"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+     xmlns:bpws="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+     xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+     xmlns:tns="http://nordea.event.jee.soa.oracle.dk/"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    >
+    <plnk:partnerLinkType name="EJBService">
+        <plnk:role name="FilterEventRemote" portType="tns:FilterEventRemote"/>
+    </plnk:partnerLinkType>
+    <wsdl:import namespace="http://nordea.event.jee.soa.oracle.dk/" location="FilterEventRemote.wsdl"/>
+</wsdl:definitions>

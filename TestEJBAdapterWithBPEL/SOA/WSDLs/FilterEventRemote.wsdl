@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions
+     name="FilterEventRemote"
+     targetNamespace="http://nordea.event.jee.soa.oracle.dk/"
+     xmlns:tns="http://nordea.event.jee.soa.oracle.dk/"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+     xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+     xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    >
+    <wsdl:types>
+        <xsd:schema xmlns:ns0="http://nordea.event.jee.soa.oracle.dk/types" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             targetNamespace="http://nordea.event.jee.soa.oracle.dk/types">
+            <?audit suppress oracle.jdeveloper.webservice.xsd-schema-not-element-qualified?>
+            <xsd:complexType name="eventInformation">
+                <xsd:sequence>
+                    <xsd:element name="ObjectName" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="ObjectIdentifier" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="EventType" type="xsd:string" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="EventInformation" type="ns0:eventInformation"/>
+        </xsd:schema>
+        <xsd:schema xmlns:ns1="http://nordea.event.jee.soa.oracle.dk/types" xmlns:ns0="http://soa.nordea.eds/EventManager"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://soa.nordea.eds/EventManager"
+                    elementFormDefault="qualified">
+            <xsd:import namespace="http://nordea.event.jee.soa.oracle.dk/types"/>
+            <xsd:element name="eventInformation" type="ns1:eventInformation"/>
+        </xsd:schema>
+        <xsd:schema targetNamespace="http://nordea.event.jee.soa.oracle.dk/" xmlns:tns="http://nordea.event.jee.soa.oracle.dk/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+            <xsd:complexType name="listSubscribersParamObject">
+                <xsd:sequence>
+                    <xsd:element xmlns:ns1="http://soa.nordea.eds/EventManager" ref="ns1:eventInformation"
+                         minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="listSubscribersParamObject" type="tns:listSubscribersParamObject"/>
+            <xsd:complexType name="listSubscribersParamObjectResponse">
+                <xsd:sequence>
+                    <xsd:element name="return" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="listSubscribersParamObjectResponse" type="tns:listSubscribersParamObjectResponse"/>
+            <xsd:complexType name="listSubscribersXML">
+                <xsd:sequence>
+                    <xsd:element name="arg0" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="listSubscribersXML" type="tns:listSubscribersXML"/>
+            <xsd:complexType name="listSubscribersXMLResponse">
+                <xsd:sequence>
+                    <xsd:element name="return" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="listSubscribersXMLResponse" type="tns:listSubscribersXMLResponse"/>
+            <xsd:complexType name="FilterEventException">
+                <xsd:sequence>
+                    <xsd:element name="Message" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="FilterEventException" type="tns:FilterEventException"/>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="listSubscribersParamObjectInput">
+        <wsdl:part name="parameters" element="tns:listSubscribersParamObject"/>
+    </wsdl:message>
+    <wsdl:message name="listSubscribersParamObjectOutput">
+        <wsdl:part name="parameters" element="tns:listSubscribersParamObjectResponse"/>
+    </wsdl:message>
+    <wsdl:message name="FilterEventException">
+        <wsdl:part name="FilterEventException" element="tns:FilterEventException"/>
+    </wsdl:message>
+    <wsdl:message name="listSubscribersXMLInput">
+        <wsdl:part name="parameters" element="tns:listSubscribersXML"/>
+    </wsdl:message>
+    <wsdl:message name="listSubscribersXMLOutput">
+        <wsdl:part name="parameters" element="tns:listSubscribersXMLResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="FilterEventRemote">
+        <wsdl:operation name="listSubscribersParamObject">
+            <wsdl:input message="tns:listSubscribersParamObjectInput" xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                 ns1:Action=""/>
+            <wsdl:output message="tns:listSubscribersParamObjectOutput" xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                 ns1:Action=""/>
+            <wsdl:fault name="FilterEventException" message="tns:FilterEventException"/>
+        </wsdl:operation>
+        <wsdl:operation name="listSubscribersXML">
+            <wsdl:input message="tns:listSubscribersXMLInput" xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                 ns1:Action=""/>
+            <wsdl:output message="tns:listSubscribersXMLOutput" xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                 ns1:Action=""/>
+            <wsdl:fault name="FilterEventException" message="tns:FilterEventException"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

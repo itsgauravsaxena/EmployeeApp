@@ -1,0 +1,14 @@
+<adapter-config name="CBPEventSubscriber" adapter="jms" wsdlLocation="../WSDLs/CBPEventSubscriber.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/wls/edsdemo/PartyDomainUDT" UIJmsProvider="WLSJMS" UIConnectionName="soa12c"/>
+  <endpoint-activation portType="Consume_Message_ptt" operation="Consume_Message">
+    <activation-spec className="oracle.tip.adapter.jms.inbound.JmsConsumeActivationSpec">
+      <property name="DurableSubscriber" value="CBPSOASUB"/>
+      <property name="PayloadType" value="TextMessage"/>
+      <property name="MessageSelector" value="AppName='CBP'"/>
+      <property name="UseMessageListener" value="false"/>
+      <property name="DestinationName" value="jms/PartyDomainUDT"/>
+    </activation-spec>
+  </endpoint-activation>
+
+</adapter-config>

@@ -17,5 +17,9 @@
     	<module>TestInsertOrMerge</module>
     	<module>PublishXMLToTopic</module>
     	<module>AddDurSubscriber</module>
+    	<module>CBPSubscriber</module>
+    	<module>CBPDemoApplication</module>
+    	<module>TestEJBAdapter</module>
+    	<module>TestEJBAdapterWithBPEL</module>
     </modules>
 </project>
